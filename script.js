@@ -16,35 +16,65 @@ window.switchTab = function(tabName) {
 
 window.filterAccounts = function() {
     const s = document.getElementById('searchBar').value.toLowerCase();
-    const f = allAccounts.filter(a => a.title.toLowerCase().includes(s));
+    const server = document.getElementById('filterServer').value.toLowerCase();
+    const price = parseFloat(document.getElementById('filterPrice').value);
+
+    const f = allAccounts.filter(a => {
+        return (a.title.toLowerCase().includes(s) || (a.description && a.description.toLowerCase().includes(s))) &&
+               (a.server_name && a.server_name.toLowerCase().includes(server)) &&
+               (isNaN(price) || a.price <= price);
+    });
     renderAccounts(f);
 }
 
 async function fetchAccounts() {
     const { data, error } = await supabase.from('accounts').select('*').order('id', { ascending: false });
     if (!error) {
-        allAccounts = data;
+        allAccounts = data || [];
         renderAccounts(allAccounts);
+    } else {
+        console.error('Fetch error:', error.message);
     }
 }
 
 function renderAccounts(list) {
     const grid = document.getElementById('accountsGrid');
+    if (list.length === 0) {
+        grid.innerHTML = '<p style="text-align:center; color:#666;">No accounts found.</p>';
+        return;
+    }
     grid.innerHTML = list.map(a => `
         <div class="account-card">
             <h3>${a.title}</h3>
+            <p>Server: ${a.server_name}</p>
+            <p>Level: ${a.level}</p>
             <p>Price: $${a.price}</p>
-        </div>`).join('');
+            <p style="color:#aaa;">${a.description || ''}</p>
+            <a href="https://wa.me/${a.seller_phone}" target="_blank" class="submit-btn">Contact WhatsApp</a>
+        </div>
+    `).join('');
 }
 
 document.getElementById('sellAccountForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const { error } = await supabase.from('accounts').insert([{
         title: document.getElementById('accTitle').value,
+        level: parseInt(document.getElementById('accLevel').value),
+        server_name: document.getElementById('accServer').value,
         price: parseFloat(document.getElementById('accPrice').value),
-        server_name: document.getElementById('accServer').value
+        description: document.getElementById('accDesc').value,
+        seller_name: document.getElementById('sellerName').value,
+        seller_phone: document.getElementById('sellerPhone').value,
+        is_sold: false
     }]);
-    if(!error) alert('Success!');
+
+    if(!error) {
+        alert('Published successfully!');
+        document.getElementById('sellAccountForm').reset();
+        window.switchTab('buyer');
+    } else {
+        alert('Error: ' + error.message);
+    }
 });
 
 fetchAccounts();
