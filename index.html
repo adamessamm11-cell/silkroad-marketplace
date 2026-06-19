@@ -1,17 +1,77 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>متجر Silkroad Origin</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <div class="logo">SILKROAD<span>ORIGIN</span></div>
-    </header>
-    <main id="accountsGrid" class="grid-container">
-        <p class="loading">جاري تحميل الحسابات...</p>
-    </main>
-    <script type="module" src="script.js"></script>
-</body>
-</html>
+<div class="brand-header">
+  <div class="logo">SILKROAD<span>ORIGIN</span></div>
+  <p>The Ultimate Gaming Marketplace</p>
+</div>
+
+<div class="tab-navigation">
+  <button class="tab-btn active" onclick="switchTab('buyer')">🛒 Marketplace</button>
+  <button class="tab-btn" onclick="switchTab('seller')">⚔️ Sell Account</button>
+</div>
+
+<div id="buyerTab" class="tab-content active">
+  <div class="container">
+    
+    <div class="filter-wrapper">
+      <input type="text" id="searchBar" placeholder="🔍 Search by title or description..." oninput="filterAccounts()">
+      <div class="filter-group">
+        <input type="text" id="filterServer" placeholder="📍 Filter by Server" oninput="filterAccounts()">
+        <input type="number" id="filterPrice" placeholder="💰 Max Price ($)" oninput="filterAccounts()">
+      </div>
+    </div>
+
+    <div class="accounts-grid" id="accountsGrid">
+      </div>
+  </div>
+</div>
+
+<div id="sellerTab" class="tab-content">
+  <div class="form-container">
+    <h2>List your Legend here! ⚔️</h2>
+    <p style="color: #aaa; text-align: center; margin-bottom: 20px;">Fill in the details to publish your account</p>
+    
+    <form id="sellAccountForm">
+      <div class="input-group">
+        <label>Your Name:</label>
+        <input type="text" id="sellerName" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="input-group">
+        <label>WhatsApp Number:</label>
+        <input type="tel" id="sellerPhone" placeholder="+201xxxxxxxxx" required>
+      </div>
+
+      <div class="input-group">
+        <label>Listing Title:</label>
+        <input type="text" id="accTitle" placeholder="Level 90 Bow max skills" required>
+      </div>
+
+      <div class="row">
+        <div class="input-group">
+          <label>Server Name:</label>
+          <input type="text" id="accServer" placeholder="Origin-1" required>
+        </div>
+        <div class="input-group">
+          <label>Character Level:</label>
+          <input type="number" id="accLevel" placeholder="90" required>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Price:</label>
+        <input type="number" id="accPrice" placeholder="Enter your price" required>
+      </div>
+
+      <div class="input-group">
+        <label>Description:</label>
+        <textarea id="accDesc" rows="3" placeholder="Describe items, build, avatars, etc..."></textarea>
+      </div>
+
+      <div class="input-group">
+        <label>Account Image:</label>
+        <input type="file" id="accImage" accept="image/*">
+      </div>
+
+      <button type="submit" class="submit-btn">Publish Account Now ✨</button>
+    </form>
+  </div>
+</div>
