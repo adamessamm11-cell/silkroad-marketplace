@@ -7,34 +7,48 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="brand-header">
-  <div class="logo">SILKROAD<span>ORIGIN</span></div>
-  <p>The Ultimate Gaming Marketplace</p>
-</div>
-
-<div class="tab-navigation">
-  <button class="tab-btn active" onclick="switchTab('buyer')">🛒 Marketplace</button>
-  <button class="tab-btn" onclick="switchTab('seller')">⚔️ Sell Account</button>
-</div>
-
-<div id="buyerTab" class="tab-content active">
-  <div class="container">
-    <div class="filter-wrapper">
-      <input type="text" id="searchBar" placeholder="🔍 Search by title or description..." oninput="filterAccounts()">
-      <div class="filter-group">
-        <input type="text" id="filterServer" placeholder="📍 Filter by Server" oninput="filterAccounts()">
-        <input type="number" id="filterPrice" placeholder="💰 Max Price ($)" oninput="filterAccounts()">
-      </div>
+    <div class="brand-header">
+        <div class="logo">SILKROAD<span>ORIGIN</span></div>
+        <p>The Ultimate Gaming Marketplace</p>
     </div>
 
-    <div class="accounts-grid" id="accountsGrid">
-       <p style="text-align: center; color: #fff;">Loading legends...</p>
+    <div class="tab-navigation">
+        <button class="tab-btn active" onclick="switchTab('buyer')">🛒 Marketplace</button>
+        <button class="tab-btn" onclick="switchTab('seller')">⚔️ Sell Account</button>
     </div>
-  </div>
-</div>
 
-<div id="sellerTab" class="tab-content">
-  <div class="form-container">
-    <h2>List your Legend here! ⚔️</h2>
-    <p style="color
+    <div id="buyerTab" class="tab-content active">
+        <div class="container">
+            <div class="filter-wrapper">
+                <input type="text" id="searchBar" placeholder="🔍 Search..." oninput="filterAccounts()">
+                <div class="filter-group">
+                    <input type="text" id="filterServer" placeholder="📍 Server" oninput="filterAccounts()">
+                    <input type="number" id="filterPrice" placeholder="💰 Max Price" oninput="filterAccounts()">
+                </div>
+            </div>
+            <div class="accounts-grid" id="accountsGrid">
+                <p style="text-align:center; color:white;">Loading legends...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="sellerTab" class="tab-content">
+        <div class="form-container">
+            <h2>List your Legend here! ⚔️</h2>
+            <form id="sellAccountForm">
+                <input type="text" id="sellerName" placeholder="Your Name" required>
+                <input type="tel" id="sellerPhone" placeholder="WhatsApp Number" required>
+                <input type="text" id="accTitle" placeholder="Listing Title" required>
+                <input type="text" id="accServer" placeholder="Server Name" required>
+                <input type="number" id="accLevel" placeholder="Level" required>
+                <input type="number" id="accPrice" placeholder="Price ($)" required>
+                <textarea id="accDesc" placeholder="Description..."></textarea>
+                <input type="file" id="accImage" accept="image/*">
+                <button type="submit" class="submit-btn">Publish Account Now ✨</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
