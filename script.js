@@ -26,7 +26,6 @@ window.switchTab = function(tabName) {
                 buyerTab.style.opacity = '1';
                 buyerTab.style.transform = 'translateY(0)';
             }, 50);
-            
             document.querySelector("button[onclick*='buyer']").classList.add('active');
             fetchAccounts();
         } else if (tabName === 'seller') {
@@ -42,8 +41,9 @@ window.switchTab = function(tabName) {
 }
 
 async function fetchAccounts() {
+    // التعديل هنا: الجدول أصبح 'accounts'
     const { data: accounts, error } = await supabase
-        .from('ORigin accountss')
+        .from('accounts')
         .select('*')
         .order('id', { ascending: false });
 
@@ -52,7 +52,7 @@ async function fetchAccounts() {
         return;
     }
 
-    allAccounts = accounts; 
+    allAccounts = accounts || []; 
     renderAccounts(allAccounts); 
 }
 
@@ -61,7 +61,7 @@ function renderAccounts(accountsList) {
     grid.innerHTML = ''; 
 
     if(accountsList.length === 0) {
-        grid.innerHTML = `<p style="text-align:center; color:#666; grid-column: 1/-1; margin-top:20px;">No legendary accounts match your search criteria ⚔️</p>`;
+        grid.innerHTML = `<p style="text-align:center; color:#666; grid-column: 1/-1; margin-top:20px;">No accounts found ⚔️</p>`;
         return;
     }
 
@@ -73,13 +73,13 @@ function renderAccounts(accountsList) {
         card.innerHTML = `
             <img src="${imgUrl}" class="card-img" alt="Account Image">
             <div class="card-body">
-                <h3 class="card-title">${acc.title}</h3>
-                <div class="card-meta"><b>Server:</b> ${acc.server_name}</div>
-                <div class="card-meta"><b>Level:</b> ${acc.level}</div>
-                <div class="card-meta" style="color:#aaa;">${acc.description || 'No description provided.'}</div>
-                <div class="card-price">$${acc.price}</div>
+                <h3 class="card-title">${acc.title || 'Untitled'}</h3>
+                <div class="card-meta"><b>Server:</b> ${acc.server_name || 'N/A'}</div>
+                <div class="card-meta"><b>Level:</b> ${acc.level || '0'}</div>
+                <div class="card-meta" style="color:#aaa;">${acc.description || 'No description.'}</div>
+                <div class="card-price">$${acc.price || '0'}</div>
                 <a href="https://wa.me/${acc.seller_phone}?text=Hello, I am interested in your account: ${acc.title}" target="_blank" class="buy-btn">
-                   💬 Contact via WhatsApp
+                    💬 Contact via WhatsApp
                 </a>
             </div>
         `;
@@ -93,9 +93,9 @@ window.filterAccounts = function() {
     const maxPrice = parseFloat(document.getElementById('filterPrice').value);
 
     const filtered = allAccounts.filter(acc => {
-        const matchesSearch = acc.title.toLowerCase().includes(searchTxt) || (acc.description && acc.description.toLowerCase().includes(searchTxt));
-        const matchesServer = acc.server_name.toLowerCase().includes(serverTxt);
-        const matchesPrice = isNaN(maxPrice) || acc.price <= maxPrice;
+        const matchesSearch = (acc.title && acc.title.toLowerCase().includes(searchTxt)) || (acc.description && acc.description.toLowerCase().includes(searchTxt));
+        const matchesServer = acc.server_name && acc.server_name.toLowerCase().includes(serverTxt);
+        const matchesPrice = isNaN(maxPrice) || (acc.price && acc.price <= maxPrice);
 
         return matchesSearch && matchesServer && matchesPrice;
     });
@@ -115,7 +115,7 @@ document.getElementById('sellAccountForm').addEventListener('submit', async (e) 
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      const { data: uploadData, error: uploadError } = await supabase
+      const { error: uploadError } = await supabase
         .storage
         .from('account_images')
         .upload(filePath, imageFile);
@@ -126,13 +126,11 @@ document.getElementById('sellAccountForm').addEventListener('submit', async (e) 
           .from('account_images')
           .getPublicUrl(filePath);
         imageUrl = linkData.publicUrl;
-      } else {
-        console.error("Storage upload error:", uploadError.message);
       }
     }
 
     const { data, error } = await supabase
-      .from('ORigin accountss')
+      .from('accounts')
       .insert([
         {
           title: document.getElementById('accTitle').value,
