@@ -7,24 +7,21 @@ const supabase = createClient(
 
 async function fetchAccounts() {
     const grid = document.getElementById('accountsGrid');
-    
-    // استخدمنا الاسم اللي ظاهر عندك في الـ Table Editor
-    const { data, error } = await supabase.from('"ORigin accountss"').select('*');
+    // تأكد من اسم الجدول هنا، لو غيرته لـ accounts اكتب accounts
+    const { data, error } = await supabase.from('ORigin accountss').select('*');
     
     if (error) {
-        grid.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
-        return;
-    }
-    
-    if (!data || data.length === 0) {
-        grid.innerHTML = `<p style="text-align:center;">الجدول فاضي في Supabase يا دوما!</p>`;
+        grid.innerHTML = `<p>حدث خطأ: ${error.message}</p>`;
         return;
     }
     
     grid.innerHTML = data.map(acc => `
         <div class="card">
-            <h3>${acc.title || 'بدون عنوان'}</h3>
-            <p>السعر: $${acc.price || '0'}</p>
+            <h3>${acc.title}</h3>
+            <p><strong>السيرفر:</strong> ${acc.server_name || 'غير محدد'}</p>
+            <p><strong>الليدل (Level):</strong> ${acc.level || '0'}</p>
+            <p><strong>السعر:</strong> ${acc.price || '0'}$</p>
+            <p><strong>البائع:</strong> ${acc.seller_name || 'غير معروف'}</p>
         </div>
     `).join('');
 }
