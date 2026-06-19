@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silkroad Origin Marketplace</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
 <div class="brand-header">
   <div class="logo">SILKROAD<span>ORIGIN</span></div>
   <p>The Ultimate Gaming Marketplace</p>
@@ -10,7 +20,6 @@
 
 <div id="buyerTab" class="tab-content active">
   <div class="container">
-    
     <div class="filter-wrapper">
       <input type="text" id="searchBar" placeholder="🔍 Search by title or description..." oninput="filterAccounts()">
       <div class="filter-group">
@@ -20,58 +29,12 @@
     </div>
 
     <div class="accounts-grid" id="accountsGrid">
-      </div>
+       <p style="text-align: center; color: #fff;">Loading legends...</p>
+    </div>
   </div>
 </div>
 
 <div id="sellerTab" class="tab-content">
   <div class="form-container">
     <h2>List your Legend here! ⚔️</h2>
-    <p style="color: #aaa; text-align: center; margin-bottom: 20px;">Fill in the details to publish your account</p>
-    
-    <form id="sellAccountForm">
-      <div class="input-group">
-        <label>Your Name:</label>
-        <input type="text" id="sellerName" placeholder="Enter your full name" required>
-      </div>
-
-      <div class="input-group">
-        <label>WhatsApp Number:</label>
-        <input type="tel" id="sellerPhone" placeholder="+201xxxxxxxxx" required>
-      </div>
-
-      <div class="input-group">
-        <label>Listing Title:</label>
-        <input type="text" id="accTitle" placeholder="Level 90 Bow max skills" required>
-      </div>
-
-      <div class="row">
-        <div class="input-group">
-          <label>Server Name:</label>
-          <input type="text" id="accServer" placeholder="Origin-1" required>
-        </div>
-        <div class="input-group">
-          <label>Character Level:</label>
-          <input type="number" id="accLevel" placeholder="90" required>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label>Price:</label>
-        <input type="number" id="accPrice" placeholder="Enter your price" required>
-      </div>
-
-      <div class="input-group">
-        <label>Description:</label>
-        <textarea id="accDesc" rows="3" placeholder="Describe items, build, avatars, etc..."></textarea>
-      </div>
-
-      <div class="input-group">
-        <label>Account Image:</label>
-        <input type="file" id="accImage" accept="image/*">
-      </div>
-
-      <button type="submit" class="submit-btn">Publish Account Now ✨</button>
-    </form>
-  </div>
-</div>
+    <p style="color
